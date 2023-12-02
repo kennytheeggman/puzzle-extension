@@ -1,4 +1,4 @@
-fetch("https://puzzlemadness.co.uk/onestroke/medium")
+fetch(url)
 	.then(a => a.text())
 	.then(html => {
 		eval(html.split("\n")[53]);
