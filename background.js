@@ -1,17 +1,24 @@
-
-// listen for our browerAction to be clicked
+chrome.webNavigation.onCompleted.addListener(function (details) {
+	main(details.tabId, details.url);
+}, {
+	url: [{
+		hostContains: 'puzzlemadness.',
+	}]
+});
 chrome.browserAction.onClicked.addListener(function (tab) {
-	// for the current tab, inject the "inject.js" file & execute it
-	
-	chrome.tabs.executeScript(tab.ib, {
-		code: "var url = \"" + tab.url + "\";"
+	main(tab.ib, tab.url);
+});
+
+
+function main(tabId, url) {
+	chrome.tabs.executeScript(tabId, {
+		code: "var url = \"" + url + "\";"
 	}, function() {
-		chrome.tabs.executeScript(tab.ib, {
+		chrome.tabs.executeScript(tabId, {
 			file: 'inject.js'
 		});
 	});
-});
-
+}
 
 
 
